@@ -8,11 +8,13 @@ name: End to End Tests (VxLAN)
 
 on:
   pull_request:
+    types:
+     - labeled
 
 jobs:
   e2e:
     name: E2E
-    if: contains(github.event.pull_request.labels.*.name, 'vxlan')
+    if: ${{ github.event.label.name == 'vxlan' }}
     timeout-minutes: 45
     runs-on: ubuntu-latest
     strategy:
