@@ -25,6 +25,7 @@ endif
 
 override CLUSTERS_ARGS += $(CLUSTER_SETTINGS_FLAG)
 override DEPLOY_ARGS += $(CLUSTER_SETTINGS_FLAG)
+override DEPLOY_ARGS += --cable_driver vxlan
 
 override E2E_ARGS += cluster2 cluster3 cluster1
 override UNIT_TEST_ARGS += test
