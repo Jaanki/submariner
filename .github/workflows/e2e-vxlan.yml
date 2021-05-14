@@ -12,6 +12,7 @@ on:
 jobs:
   e2e:
     name: E2E
+    if: contains(github.event.pull_request.labels.*.name, 'vxlan')
     timeout-minutes: 45
     runs-on: ubuntu-latest
     strategy:
