@@ -14,7 +14,7 @@ require (
 	github.com/prometheus/client_golang v1.10.0
 	github.com/rdegges/go-ipify v0.0.0-20150526035502-2d94a6a86c40
 	github.com/submariner-io/admiral v0.9.0-rc0.0.20210506031438-f6fdcbce358a
-	github.com/submariner-io/shipyard v0.9.1-0.20210506024409-3beff067454a
+	github.com/submariner-io/shipyard 14beabd
 	github.com/vishvananda/netlink v1.1.0
 	golang.org/x/sys v0.0.0-20210426230700-d19ff857e887
 	golang.zx2c4.com/wireguard/wgctrl v0.0.0-20210427135350-f9ad6d392236
