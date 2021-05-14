@@ -34,6 +34,7 @@ replace (
 	k8s.io/apimachinery => k8s.io/apimachinery v0.19.10
 	k8s.io/client-go => k8s.io/client-go v0.19.10
 	k8s.io/cloud-provider => k8s.io/cloud-provider v0.19.10
+	github.com/submariner-io/shipyard => github.com/Jaanki/shipyard 14beabdd2d9ff67054011f315e994f4d4fd32847
 )
 
 // Security fixes
