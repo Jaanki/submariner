@@ -8,7 +8,7 @@ require (
 	github.com/ebay/go-ovn v0.1.1-0.20210414223409-7376ba97f8cd
 	github.com/go-ping/ping v0.0.0-20210506233800-ff8be3320020
 	github.com/kelseyhightower/envconfig v1.4.0
-	github.com/onsi/ginkgo v1.16.2
+	github.com/onsi/ginkgo v1.16.5
 	github.com/onsi/gomega v1.12.0
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.10.0
