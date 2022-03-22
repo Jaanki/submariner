@@ -24,7 +24,7 @@ require (
 	golang.org/x/term v0.0.0-20210503060354-a79de5458b56 // indirect
 	golang.zx2c4.com/wireguard v0.0.0-20210513230823-951bc9ec40e9 // indirect
 	golang.zx2c4.com/wireguard/wgctrl v0.0.0-20210506160403-92e472f520a5
-	google.golang.org/protobuf v1.26.0
+	google.golang.org/protobuf v1.28.0
 	k8s.io/api v0.21.0
 	k8s.io/apimachinery v0.21.0
 	k8s.io/client-go v1.5.2
