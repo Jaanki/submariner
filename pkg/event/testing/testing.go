@@ -30,9 +30,9 @@ import (
 )
 
 type TestEvent struct {
+	Parameter any
 	Name      string
 	Handler   string
-	Parameter any
 }
 
 type TestHandlerState struct {
@@ -46,11 +46,11 @@ func (c *TestHandlerState) IsOnGateway() bool {
 
 type TestHandlerBase struct {
 	event.HandlerBase
+	Events        chan TestEvent
+	failOnEvent   sync.Map
 	Name          string
 	NetworkPlugin string
-	Events        chan TestEvent
 	Initialized   bool
-	failOnEvent   sync.Map
 }
 
 type TestHandler struct {

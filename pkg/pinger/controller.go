@@ -36,16 +36,16 @@ type Controller interface {
 }
 
 type ControllerConfig struct {
+	NewPinger           func(Config) Interface
 	SupportedIPFamilies []k8snet.IPFamily
 	PingInterval        int
 	MaxPacketLossCount  int
-	NewPinger           func(Config) Interface
 }
 
 type controller struct {
+	pingers map[string]Interface
 	ControllerConfig
 	sync.RWMutex
-	pingers map[string]Interface
 }
 
 func NewController(config ControllerConfig) Controller {

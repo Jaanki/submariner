@@ -459,11 +459,11 @@ func testUninstall() {
 }
 
 type gatewayMonitorTestDriver struct {
+	endpoints dynamic.ResourceInterface
 	*testDriverBase
-	endpoints            dynamic.ResourceInterface
 	kubeClient           *fakek8s.Clientset
-	leaderElectionConfig controllers.LeaderElectionConfig
 	leaderElection       *testutil.LeaderElectionSupport
+	leaderElectionConfig controllers.LeaderElectionConfig
 }
 
 func newGatewayMonitorTestDriver() *gatewayMonitorTestDriver {

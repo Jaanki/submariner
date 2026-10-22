@@ -32,19 +32,19 @@ import (
 	k8snet "k8s.io/utils/net"
 )
 
-type Engine struct { //nolint:gocritic // This mutex is exposed but we tweak it in tests
-	sync.Mutex
-	Connections               []v1.Connection
+type Engine struct {
 	ListCableConnectionsError error
-	HAStatus                  v1.HAStatus
-	LocalEndPoint             *types.SubmarinerEndpoint
-	installCable              chan *v1.EndpointSpec
 	ErrOnInstallCable         error
-	removeCable               chan *v1.EndpointSpec
 	ErrOnRemoveCable          error
 	ErrOnStart                error
 	ErrOnCleanup              error
+	LocalEndPoint             *types.SubmarinerEndpoint
+	installCable              chan *v1.EndpointSpec
+	removeCable               chan *v1.EndpointSpec
 	onCleanup                 chan struct{}
+	HAStatus                  v1.HAStatus
+	Connections               []v1.Connection
+	sync.Mutex
 }
 
 var _ cableengine.Engine = &Engine{}

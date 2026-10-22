@@ -36,12 +36,12 @@ import (
 
 type Attributes struct {
 	Name         string
-	VxlanID      int
 	Group        net.IP
 	SrcAddr      net.IP
+	HardwareAddr net.HardwareAddr
+	VxlanID      int
 	VtepPort     int
 	Mtu          int
-	HardwareAddr net.HardwareAddr
 }
 
 type Interface struct {

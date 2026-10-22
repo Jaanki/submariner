@@ -78,15 +78,15 @@ type specification struct {
 }
 
 type amneziawgDriver struct {
-	localEndpoint   v1.EndpointSpec
-	connections     map[string]*v1.Connection // clusterID -> remote ep connection
 	client          Client
 	netLink         netlinkAPI.Interface
 	link            netlink.Link
+	userspaceDevice UserspaceDevice
+	connections     map[string]*v1.Connection
 	spec            *specification
 	psk             *wgtypes.Key
+	localEndpoint   v1.EndpointSpec
 	keepAlive       time.Duration
-	userspaceDevice UserspaceDevice
 }
 
 // NewDriver creates a new AmneziaWG cable driver.

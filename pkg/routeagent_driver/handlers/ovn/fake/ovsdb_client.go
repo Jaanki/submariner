@@ -36,9 +36,9 @@ import (
 )
 
 type OVSDBClient struct {
+	models    map[reflect.Type][]any
 	mutex     sync.Mutex
 	connected atomic.Bool
-	models    map[reflect.Type][]any
 }
 
 func NewOVSDBClient() *OVSDBClient {

@@ -46,9 +46,9 @@ type specification struct {
 }
 
 type handlerStateImpl struct {
+	remoteEndpoints sync.Map
 	isOnGateway     atomic.Bool
 	wasOnGateway    bool
-	remoteEndpoints sync.Map
 }
 
 func (s *handlerStateImpl) setIsOnGateway(v bool) {
@@ -73,18 +73,18 @@ func (s *handlerStateImpl) GetRemoteEndpoints() []subv1.Endpoint {
 type Controller struct {
 	endpointInformer cache.SharedInformer
 	nodeInformer     cache.SharedInformer
-	syncers          []syncer.Interface
 	handlers         *event.Registry
+	syncers          []syncer.Interface
 }
 
 type handlerController struct {
-	syncMutex          sync.Mutex
-	handlerState       handlerStateImpl
 	handler            event.Handler
 	nodeHandler        event.NodeHandler
+	lastRemoteEndpoint map[string]*subv1.Endpoint
 	hostname           string
 	clusterID          string
-	lastRemoteEndpoint map[string]*subv1.Endpoint
+	handlerState       handlerStateImpl
+	syncMutex          sync.Mutex
 }
 
 // If the handler cannot recover from a failure, even after retrying for maximum requeue attempts,

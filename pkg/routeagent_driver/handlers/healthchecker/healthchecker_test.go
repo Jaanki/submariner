@@ -354,13 +354,13 @@ var _ = Describe("Stop", func() {
 })
 
 type testDriver struct {
+	handler     event.Handler
+	endpoints   dynamic.ResourceInterface
+	routeAgents submarinerv1client.RouteAgentInterface
 	*eventtesting.ControllerSupport
-	supportedIPFamilies  []k8snet.IPFamily
 	pingerMap            map[string]*fake.Pinger
-	handler              event.Handler
-	endpoints            dynamic.ResourceInterface
-	routeAgents          submarinerv1client.RouteAgentInterface
 	submClient           *fakeClient.Clientset
+	supportedIPFamilies  []k8snet.IPFamily
 	healthcheckerEnabled bool
 }
 

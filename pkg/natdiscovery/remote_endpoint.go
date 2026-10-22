@@ -52,26 +52,26 @@ func init() {
 }
 
 type remoteEndpointNAT struct {
-	sync.Mutex
-	endpoint               v1.Endpoint
-	family                 k8snet.IPFamily
-	state                  endpointState
+	started                time.Time
 	lastCheck              time.Time
 	lastTransition         time.Time
-	started                time.Time
-	timeout                time.Duration
+	family                 k8snet.IPFamily
 	useIP                  string
+	endpoint               v1.Endpoint
+	state                  endpointState
+	timeout                time.Duration
 	lastPublicIPRequestID  uint64
 	lastPrivateIPRequestID uint64
-	useNAT                 bool
-	usingLoadBalancer      bool
+	sync.Mutex
+	useNAT            bool
+	usingLoadBalancer bool
 }
 
 type NATEndpointInfo struct {
-	Endpoint  v1.Endpoint
-	UseNAT    bool
 	UseIP     string
 	UseFamily k8snet.IPFamily
+	Endpoint  v1.Endpoint
+	UseNAT    bool
 }
 
 func (rn *remoteEndpointNAT) toNATEndpointInfo() *NATEndpointInfo {

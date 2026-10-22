@@ -56,17 +56,17 @@ const (
 
 type mtuHandler struct {
 	event.HandlerBase
-	ipFamily         k8snet.IPFamily
-	localClusterCidr []string
 	pFilter          packetfilter.Interface
-	tableType        packetfilter.TableType
-	chainType        packetfilter.ChainType
 	remoteIPSet      packetfilter.NamedSet
 	localIPSet       packetfilter.NamedSet
-	forceMss         forceMssSts
-	tcpMssValue      int
+	ipFamily         k8snet.IPFamily
 	localCIDRIPSet   string
 	remoteCIDRIPSet  string
+	localClusterCidr []string
+	forceMss         forceMssSts
+	tcpMssValue      int
+	tableType        packetfilter.TableType
+	chainType        packetfilter.ChainType
 }
 
 var logger = log.Logger{Logger: logf.Log.WithName("MTU")}

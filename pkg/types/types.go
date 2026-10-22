@@ -34,22 +34,22 @@ type SubmarinerEndpoint struct {
 }
 
 type SubmarinerSpecification struct {
-	ClusterCidr                   []string
-	GlobalCidr                    []string
-	ServiceCidr                   []string
 	Broker                        string
 	CableDriver                   string
 	ClusterID                     string
 	Namespace                     string
 	PublicIP                      string
-	Debug                         bool
-	NATEnabled                    bool
-	HealthCheckEnabled            bool `default:"true"`
-	Uninstall                     bool
-	HaltOnCertError               bool `split_words:"true"`
+	GlobalCidr                    []string
+	ServiceCidr                   []string
+	ClusterCidr                   []string
 	HealthCheckInterval           int
-	HealthCheckMaxPacketLossCount int
 	MetricsPort                   int `default:"32780"`
+	HealthCheckMaxPacketLossCount int
+	Debug                         bool
+	HaltOnCertError               bool `split_words:"true"`
+	Uninstall                     bool
+	HealthCheckEnabled            bool `default:"true"`
+	NATEnabled                    bool
 }
 
 func (subSpec *SubmarinerSpecification) GetIPFamilies() []k8snet.IPFamily {

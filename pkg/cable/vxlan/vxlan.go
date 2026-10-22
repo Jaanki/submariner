@@ -50,13 +50,13 @@ const (
 )
 
 type vxLan struct {
-	localEndpoint v1.EndpointSpec
+	netLink       netlinkAPI.Interface
+	vxlanIfaces   map[k8snet.IPFamily]*vxlan.Interface
+	vtepIPs       map[k8snet.IPFamily]net.IP
 	localCluster  types.SubmarinerCluster
 	connections   []v1.Connection
+	localEndpoint v1.EndpointSpec
 	mutex         sync.Mutex
-	vxlanIfaces   map[k8snet.IPFamily]*vxlan.Interface
-	netLink       netlinkAPI.Interface
-	vtepIPs       map[k8snet.IPFamily]net.IP
 }
 
 var (

@@ -232,10 +232,10 @@ func routeFieldMap(src, gw, dst string) map[string]string {
 }
 
 type testDriver struct {
-	localEndpoint subv1.EndpointSpec
+	driver        cable.Driver
 	localCluster  *types.SubmarinerCluster
 	netLink       *fakeNetlink.NetLink
-	driver        cable.Driver
+	localEndpoint subv1.EndpointSpec
 }
 
 func newTestDriver() *testDriver {

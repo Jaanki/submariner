@@ -98,13 +98,13 @@ var _ = Describe("MTU Handler", func() {
 })
 
 type testDriver struct {
-	ipFamily    k8snet.IPFamily
+	handler     event.Handler
 	pFilter     *fakePF.PacketFilter
 	netLink     *fakenetlink.NetLink
-	handler     event.Handler
+	ipFamily    k8snet.IPFamily
 	tcpMssValue int
-	isGlobalnet bool
 	tableType   packetfilter.TableType
+	isGlobalnet bool
 }
 
 func newTestDriver() *testDriver {

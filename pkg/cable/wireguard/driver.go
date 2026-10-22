@@ -78,13 +78,13 @@ type specification struct {
 }
 
 type wireguard struct {
-	localEndpoint v1.EndpointSpec
-	connections   map[string]*v1.Connection // clusterID -> remote ep connection
 	client        Client
 	netLink       netlinkAPI.Interface
 	link          netlink.Link
+	connections   map[string]*v1.Connection
 	spec          *specification
 	psk           *wgtypes.Key
+	localEndpoint v1.EndpointSpec
 }
 
 // NewDriver creates a new WireGuard driver.

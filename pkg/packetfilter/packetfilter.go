@@ -252,12 +252,12 @@ type Chain struct {
 }
 
 type ChainIPHook struct {
+	JumpRule *Rule
 	Name     string
 	Type     ChainType
 	Hook     ChainHook
 	Priority ChainPriority
 	Policy   ChainPolicy
-	JumpRule *Rule
 }
 type SetInfo struct {
 	// Name is the set name.

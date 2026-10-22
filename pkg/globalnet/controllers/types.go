@@ -100,15 +100,15 @@ type LeaderElectionConfig struct {
 }
 
 type GatewayMonitorConfig struct {
-	LeaderElectionConfig
 	RestMapper        meta.RESTMapper
 	Client            dynamic.Interface
+	KubeClient        kubernetes.Interface
 	Scheme            *runtime.Scheme
-	Spec              Specification
+	Hostname          string
 	LocalCIDRs        []string
 	LocalClusterCIDRs []string
-	KubeClient        kubernetes.Interface
-	Hostname          string
+	Spec              Specification
+	LeaderElectionConfig
 }
 
 type baseController struct {
@@ -127,18 +127,18 @@ type gatewayMonitorInterface struct {
 
 type gatewayMonitor struct {
 	event.HandlerBase
-	*baseController
-	GatewayMonitorConfig
-	syncerConfig                *syncer.ResourceSyncerConfig
-	gatewaySharedInformer       cache.SharedInformer
-	gatewaySharedInformerStopCh chan struct{}
 	pFilter                     packetfilter.Interface
-	shuttingDown                atomic.Bool
-	leaderElectionInfo          atomic.Pointer[LeaderElectionInfo]
-	nodeName                    string
-	cniIP                       string
-	controllersMutex            sync.Mutex // Protects controllers
-	controllers                 []Interface
+	gatewaySharedInformer       cache.SharedInformer
+	syncerConfig                *syncer.ResourceSyncerConfig
+	gatewaySharedInformerStopCh chan struct{}
+	*baseController
+	leaderElectionInfo atomic.Pointer[LeaderElectionInfo]
+	GatewayMonitorConfig
+	nodeName         string
+	cniIP            string
+	controllers      []Interface
+	controllersMutex sync.Mutex
+	shuttingDown     atomic.Bool
 }
 
 type baseSyncerController struct {
@@ -154,9 +154,9 @@ type baseIPAllocationController struct {
 
 type globalEgressIPController struct {
 	*baseIPAllocationController
-	sync.Mutex
 	podWatchers   map[string]*egressPodWatcher
 	watcherConfig watcher.Config
+	sync.Mutex
 }
 
 type egressPodWatcher struct {
@@ -206,45 +206,45 @@ type gatewayController struct {
 
 type ingressPodController struct {
 	*baseSyncerController
-	publishNotReadyAddresses bool
+	ingressIPMap             set.Set[string]
 	svcName                  string
 	namespace                string
-	ingressIPMap             set.Set[string]
+	publishNotReadyAddresses bool
 }
 
 type IngressPodControllers struct {
-	mutex       sync.Mutex
+	ingressIPs  dynamic.NamespaceableResourceInterface
 	controllers map[string]*ingressPodController
 	config      syncer.ResourceSyncerConfig
-	ingressIPs  dynamic.NamespaceableResourceInterface
+	mutex       sync.Mutex
 }
 
 type endpointsController struct {
+	endpoints dynamic.NamespaceableResourceInterface
 	*baseSyncerController
 	name      string
 	namespace string
-	endpoints dynamic.NamespaceableResourceInterface
 }
 
 type ServiceExportEndpointsControllers struct {
-	mutex       sync.Mutex
 	controllers map[string]*endpointsController
 	config      syncer.ResourceSyncerConfig
+	mutex       sync.Mutex
 }
 
 type ingressEndpointsController struct {
-	*baseSyncerController
-	svcName    string
-	namespace  string
-	config     syncer.ResourceSyncerConfig
 	ingressIPs dynamic.NamespaceableResourceInterface
+	*baseSyncerController
+	svcName   string
+	namespace string
+	config    syncer.ResourceSyncerConfig
 }
 
 type IngressEndpointsControllers struct {
-	mutex       sync.Mutex
+	ingressIPs  dynamic.NamespaceableResourceInterface
 	controllers map[string]*ingressEndpointsController
 	config      syncer.ResourceSyncerConfig
-	ingressIPs  dynamic.NamespaceableResourceInterface
+	mutex       sync.Mutex
 }
 
 var logger = log.Logger{Logger: logf.Log.WithName("Globalnet")}

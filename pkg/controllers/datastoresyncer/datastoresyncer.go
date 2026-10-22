@@ -46,10 +46,10 @@ import (
 )
 
 type DatastoreSyncer struct {
-	localCluster  types.SubmarinerCluster
 	localEndpoint *endpoint.Local
-	syncerConfig  broker.SyncerConfig
 	syncer        *broker.Syncer
+	syncerConfig  broker.SyncerConfig
+	localCluster  types.SubmarinerCluster
 }
 
 var logger = log.Logger{Logger: logf.Log.WithName("DSSyncer")}

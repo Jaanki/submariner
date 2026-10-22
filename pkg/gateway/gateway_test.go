@@ -233,8 +233,6 @@ var _ = Describe("Run", func() {
 
 type testDriver struct {
 	config           gateway.Config
-	localPodName     string
-	nodeName         string
 	endpoints        dynamic.NamespaceableResourceInterface
 	clusters         dynamic.NamespaceableResourceInterface
 	expectedRunErr   error
@@ -243,6 +241,8 @@ type testDriver struct {
 	kubeClient       *k8sfake.Clientset
 	dynClient        *dynamicfake.FakeDynamicClient
 	leaderElection   *testutil.LeaderElectionSupport
+	localPodName     string
+	nodeName         string
 	remoteIPCounter  int
 }
 

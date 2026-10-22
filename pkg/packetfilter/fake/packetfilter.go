@@ -36,17 +36,16 @@ import (
 const MaxChainLength = 29
 
 type PacketFilter struct {
-	mutex                    sync.Mutex
 	chainRules               map[string][]string
 	hookChains               map[string]packetfilter.ChainIPHook
+	sets                     map[string]set.Set[string]
 	failOnAppendRuleMatchers []any
 	failOnDeleteRuleMatchers []any
-
-	sets                     map[string]set.Set[string]
 	failOnDestroySetMatchers []any
 	failOnCreateSetMatchers  []any
 	failOnAddEntryMatchers   []any
 	failOnDelEntryMatchers   []any
+	mutex                    sync.Mutex
 }
 
 func New(allowedFamilies ...k8snet.IPFamily) *PacketFilter {

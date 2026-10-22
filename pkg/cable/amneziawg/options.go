@@ -31,10 +31,10 @@ import (
 
 // cableDriverOption is one SUBMARINER_CABLEDRIVEROPTIONS key.
 type cableDriverOption struct {
-	key   string                               // JSON option name (e.g. "jc", "h1", "keepalive")
-	def   string                               // default when the key is absent or empty in the env map
-	dest  any                                  // *T — filled by parse, then read back for cross-field validation
-	parse func(key, value string) (any, error) // parses value, stores into dest, returns the parsed value
+	dest  any
+	parse func(key, value string) (any, error)
+	key   string
+	def   string
 }
 
 // cableDriverOptionTable is the full set of keys accepted in cableDriverOptions.

@@ -74,12 +74,12 @@ type noopUserspaceDevice struct{}
 func (noopUserspaceDevice) Close() error { return nil }
 
 type testDriver struct {
-	endpointSpec      submarinerv1.EndpointSpec
-	localEndpoint     *endpoint.Local
 	driver            cable.Driver
+	localEndpoint     *endpoint.Local
 	netLink           *fakeNetlink.NetLink
 	client            *fakeClient
 	checkNewDriverErr func(error)
+	endpointSpec      submarinerv1.EndpointSpec
 }
 
 func newTestDriver() *testDriver {

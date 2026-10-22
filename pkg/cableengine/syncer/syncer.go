@@ -43,12 +43,12 @@ import (
 )
 
 type GatewaySyncer struct {
-	mutex       sync.Mutex
 	client      v1typed.GatewayInterface
 	engine      cableengine.Engine
-	version     string
 	statusError error
 	healthCheck healthchecker.Interface
+	version     string
+	mutex       sync.Mutex
 }
 
 var (

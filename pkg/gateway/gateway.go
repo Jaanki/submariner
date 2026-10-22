@@ -72,36 +72,34 @@ type LeaderElectionConfig struct {
 }
 
 type Config struct {
-	LeaderElectionConfig
-	Spec                 types.SubmarinerSpecification
-	SyncerConfig         broker.SyncerConfig
-	WatcherConfig        watcher.Config
-	SubmarinerClient     submclientset.Interface
-	KubeClient           kubernetes.Interface
-	LeaderElectionClient kubernetes.Interface
-	NewCableEngine       func(localCluster *types.SubmarinerCluster,
-		localEndpoint *endpoint.Local) cableengine.Engine
+	SubmarinerClient      submclientset.Interface
+	KubeClient            kubernetes.Interface
+	LeaderElectionClient  kubernetes.Interface
+	NewCableEngine        func(localCluster *types.SubmarinerCluster, localEndpoint *endpoint.Local) cableengine.Engine
 	NewNATDiscovery       func(localEndpoint *endpoint.Local) (natdiscovery.Interface, error)
-	StartSigningRequestor func(ctx context.Context, syncerConfig broker.SyncerConfig,
-		stopCh <-chan struct{}) (certificate.SigningRequestor, error)
+	StartSigningRequestor func(ctx context.Context, syncerConfig broker.SyncerConfig, stopCh <-chan struct{}) (certificate.SigningRequestor, error)
+	SyncerConfig          broker.SyncerConfig
+	WatcherConfig         watcher.Config
+	Spec                  types.SubmarinerSpecification
+	LeaderElectionConfig
 }
 
 type gatewayType struct {
 	Config
-	controllersMutex        sync.Mutex
-	airGapped               bool
-	cableHealthChecker      healthchecker.Interface
-	cableEngineSyncer       *syncer.GatewaySyncer
 	cableEngine             cableengine.Engine
-	publicIPWatcher         *endpoint.PublicIPWatcher
-	datastoreSyncer         *datastoresyncer.DatastoreSyncer
+	recorder                record.EventRecorder
 	natDiscovery            natdiscovery.Interface
+	cableHealthChecker      healthchecker.Interface
+	publicIPWatcher         *endpoint.PublicIPWatcher
+	cableEngineSyncer       *syncer.GatewaySyncer
+	datastoreSyncer         *datastoresyncer.DatastoreSyncer
 	gatewayPod              *pod.GatewayPod
-	hostName                string
 	localEndpoint           *endpoint.Local
 	fatalError              chan error
 	leaderComponentsStarted *sync.WaitGroup
-	recorder                record.EventRecorder
+	hostName                string
+	controllersMutex        sync.Mutex
+	airGapped               bool
 }
 
 var logger = log.Logger{Logger: logf.Log.WithName("Gateway")}

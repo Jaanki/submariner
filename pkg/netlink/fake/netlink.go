@@ -44,8 +44,8 @@ type linkType struct {
 }
 
 type networkInterface struct {
-	netlinkAPI.DefaultNetworkInterface
 	addrs []net.Addr
+	netlinkAPI.DefaultNetworkInterface
 }
 
 func (i *networkInterface) Addrs() ([]net.Addr, error) {
@@ -53,7 +53,7 @@ func (i *networkInterface) Addrs() ([]net.Addr, error) {
 }
 
 type basicType struct {
-	mutex             sync.Mutex
+	addrUpdateCh      atomic.Value
 	linkIndices       map[string]int
 	links             map[string]*linkType
 	routes            map[int][]netlink.Route
@@ -61,8 +61,8 @@ type basicType struct {
 	rules             map[int][]netlink.Rule
 	addrs             map[int][]netlink.Addr
 	netInterfaces     map[int]*networkInterface
-	addrUpdateCh      atomic.Value
 	allowedIPFamilies sets.Set[k8snet.IPFamily]
+	mutex             sync.Mutex
 }
 
 type NetLink struct {

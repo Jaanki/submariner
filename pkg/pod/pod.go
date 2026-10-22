@@ -44,10 +44,10 @@ const (
 )
 
 type GatewayPod struct {
+	clientset kubernetes.Interface
 	namespace string
 	node      string
 	name      string
-	clientset kubernetes.Interface
 }
 
 var logger = log.Logger{Logger: logf.Log.WithName("Pod")}

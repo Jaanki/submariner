@@ -135,38 +135,30 @@ func init() {
 }
 
 type libreswan struct {
-	localEndpoint subv1.EndpointSpec
-	// This tracks the requested connections
-	connections []subv1.Connection
-
-	secretKey string
-	logFile   string
-
-	ipSecNATTPort   string
-	defaultNATTPort int32
-
+	signingRequestor      certificate.SigningRequestor
+	certificateHandler    *CertificateHandler
+	missedRefreshes       map[string]int
+	connectionFile        *ConnectionFile
+	authMode              AuthMode
+	ipSecNATTPort         string
+	logFile               string
+	secretKey             string
+	connections           []subv1.Connection
+	localEndpoint         subv1.EndpointSpec
+	defaultNATTPort       int32
 	debug                 bool
 	forceUDPEncapsulation bool
 	plutoStarted          bool
-	authMode              AuthMode
-
-	certificateHandler *CertificateHandler
-	connectionFile     *ConnectionFile
-	signingRequestor   certificate.SigningRequestor
-
-	// Counts the consecutive status refreshes in which a connection had no established IPsec SA. Only
-	// allocated in cert mode, so it's nil in PSK mode and any inadvertent write to it would panic.
-	missedRefreshes map[string]int
 }
 
 type specification struct {
-	Debug       bool
-	ForceEncaps bool
 	PSK         string
 	PSKSecret   string
 	LogFile     string
 	NATTPort    string `default:"4500"`
-	AuthMode    string `default:"psk"` // Authentication mode: "psk" or "cert"
+	AuthMode    string `default:"psk"`
+	Debug       bool
+	ForceEncaps bool
 }
 
 // NewLibreswan starts an IKE daemon using Libreswan and configures it to manage Submariner's endpoints.

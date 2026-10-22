@@ -44,22 +44,22 @@ import (
 )
 
 type Config struct {
+	RouteAgentOwner metav1.Object
+	Namespace       string
+	LocalNodeName   string
+	Version         string
 	pinger.ControllerConfig
-	HealthCheckerEnabled     bool
 	RouteAgentUpdateInterval time.Duration
-	RouteAgentOwner          metav1.Object
-	Namespace                string
-	LocalNodeName            string
-	Version                  string
+	HealthCheckerEnabled     bool
 }
 
 type controller struct {
 	event.HandlerBase
 	pingerController pinger.Controller
-	config           Config
-	stopCh           chan struct{}
-	stopOnce         sync.Once
 	client           v1typed.RouteAgentInterface
+	stopCh           chan struct{}
+	config           Config
+	stopOnce         sync.Once
 }
 
 var logger = log.Logger{Logger: logf.Log.WithName("HealthChecker")}

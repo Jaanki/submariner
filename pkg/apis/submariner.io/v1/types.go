@@ -66,33 +66,19 @@ type Endpoint struct {
 }
 
 type EndpointSpec struct {
-	// +kubebuilder:validation:MaxLength=63
-	// +kubebuilder:validation:MinLength=1
-	ClusterID string `json:"cluster_id"`
-	CableName string `json:"cable_name"`
-	// Deprecated: Get/SetHealthCheckIP() or, if necessary, HealthCheckIPs
-	// +optional
-	HealthCheckIP string `json:"healthCheckIP,omitempty"`
-	// +kubebuilder:validation:MaxItems:=2
-	// +optional
-	HealthCheckIPs []string `json:"healthCheckIPs,omitempty"`
-	Hostname       string   `json:"hostname"`
-	Subnets        []string `json:"subnets"`
-	// Deprecated: Use Get/SetPrivateIP() or, if necessary, PrivateIPs
-	// +optional
-	PrivateIP string `json:"private_ip,omitempty"`
-	// +kubebuilder:validation:MaxItems:=2
-	// +optional
-	PrivateIPs []string `json:"privateIPs,omitempty"`
-	// Deprecated: Use Get/SetPublicIP() or, if necessary, PublicIPs
-	// +optional
-	PublicIP string `json:"public_ip,omitempty"`
-	// +kubebuilder:validation:MaxItems:=2
-	// +optional
-	PublicIPs     []string          `json:"publicIPs,omitempty"`
-	NATEnabled    bool              `json:"nat_enabled"`
-	Backend       string            `json:"backend"`
-	BackendConfig map[string]string `json:"backend_config,omitempty"`
+	BackendConfig  map[string]string `json:"backend_config,omitempty"`
+	PublicIP       string            `json:"public_ip,omitempty"`
+	CableName      string            `json:"cable_name"`
+	HealthCheckIP  string            `json:"healthCheckIP,omitempty"`
+	ClusterID      string            `json:"cluster_id"`
+	Hostname       string            `json:"hostname"`
+	PrivateIP      string            `json:"private_ip,omitempty"`
+	Backend        string            `json:"backend"`
+	HealthCheckIPs []string          `json:"healthCheckIPs,omitempty"`
+	PublicIPs      []string          `json:"publicIPs,omitempty"`
+	PrivateIPs     []string          `json:"privateIPs,omitempty"`
+	Subnets        []string          `json:"subnets"`
+	NATEnabled     bool              `json:"nat_enabled"`
 }
 
 const (
@@ -144,9 +130,9 @@ type Gateway struct {
 type GatewayStatus struct {
 	Version       string       `json:"version"`
 	HAStatus      HAStatus     `json:"haStatus"`
-	LocalEndpoint EndpointSpec `json:"localEndpoint"`
 	StatusFailure string       `json:"statusFailure"`
 	Connections   []Connection `json:"connections"`
+	LocalEndpoint EndpointSpec `json:"localEndpoint"`
 }
 
 // LatencyRTTSpec describes the round trip time information for a packet
@@ -175,13 +161,12 @@ const (
 )
 
 type Connection struct {
+	LatencyRTT    *LatencyRTTSpec  `json:"latencyRTT,omitempty"`
 	Status        ConnectionStatus `json:"status"`
 	StatusMessage string           `json:"statusMessage"`
-	Endpoint      EndpointSpec     `json:"endpoint"`
 	UsingIP       string           `json:"usingIP,omitempty"`
+	Endpoint      EndpointSpec     `json:"endpoint"`
 	UsingNAT      bool             `json:"usingNAT,omitempty"`
-	// +optional
-	LatencyRTT *LatencyRTTSpec `json:"latencyRTT,omitempty"`
 }
 
 type ConnectionStatus string
@@ -210,11 +195,10 @@ type RouteAgentStatus struct {
 }
 
 type RemoteEndpoint struct {
+	LatencyRTT    *LatencyRTTSpec  `json:"latencyRTT,omitempty"`
 	Status        ConnectionStatus `json:"status"`
 	StatusMessage string           `json:"statusMessage"`
 	Spec          EndpointSpec     `json:"spec"`
-	// +optional
-	LatencyRTT *LatencyRTTSpec `json:"latencyRTT,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -339,28 +323,16 @@ type ClusterGlobalEgressIPList struct {
 // +kubebuilder:subresource:status
 
 type GlobalIngressIP struct {
+	Spec              GlobalIngressIPSpec   `json:"spec"`
+	Status            GlobalIngressIPStatus `json:"status,omitempty"`
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-
-	// Spec is the specification of desired behavior of GlobalIngressIP object.
-	Spec GlobalIngressIPSpec `json:"spec"`
-
-	// Observed status of GlobalIngressIP. Its a read-only field.
-	// +optional
-	Status GlobalIngressIPStatus `json:"status,omitempty"`
 }
 
 type GlobalIngressIPSpec struct {
-	// Specifies the type of the entity targeted by this object.
-	Target TargetType `json:"target"`
-
-	// The reference to a targeted Service, if applicable.
-	// +Optional
 	ServiceRef *corev1.LocalObjectReference `json:"serviceRef,omitempty"`
-
-	// The reference to a targeted Pod, if applicable.
-	// +Optional
-	PodRef *corev1.LocalObjectReference `json:"podRef,omitempty"`
+	PodRef     *corev1.LocalObjectReference `json:"podRef,omitempty"`
+	Target     TargetType                   `json:"target"`
 }
 
 type TargetType string
@@ -372,12 +344,8 @@ const (
 )
 
 type GlobalIngressIPStatus struct {
-	// +optional
-	Conditions []metav1.Condition `json:"conditions,omitempty"`
-
-	// The GlobalIP allocated to this object.
-	// +optional
-	AllocatedIP string `json:"allocatedIP"`
+	AllocatedIP string             `json:"allocatedIP"`
+	Conditions  []metav1.Condition `json:"conditions,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

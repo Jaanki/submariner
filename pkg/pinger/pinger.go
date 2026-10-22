@@ -44,10 +44,10 @@ const (
 )
 
 type LatencyInfo struct {
+	Spec             *submarinerv1.LatencyRTTSpec
 	ConnectionError  string
 	ConnectionStatus ConnectionStatus
 	IP               string
-	Spec             *submarinerv1.LatencyRTTSpec
 }
 
 var (
@@ -82,15 +82,15 @@ type Config struct {
 }
 
 type pingerImpl struct {
-	sync.Mutex
+	stopCh             chan struct{}
 	ip                 string
+	failureMsg         string
+	connectionStatus   ConnectionStatus
+	statistics         statistics
 	pingInterval       time.Duration
 	pingTimeout        time.Duration
 	maxPacketLossCount int
-	statistics         statistics
-	failureMsg         string
-	connectionStatus   ConnectionStatus
-	stopCh             chan struct{}
+	sync.Mutex
 }
 
 func NewPinger(config Config) Interface {

@@ -47,30 +47,30 @@ import (
 type NewOVSDBClientFn func(_ model.ClientDBModel, _ ...libovsdbclient.Option) (libovsdbclient.Client, error)
 
 type HandlerConfig struct {
-	Namespace            string
-	ClusterCIDR          []string
-	ServiceCIDR          []string
 	SubmClient           clientset.Interface
 	K8sClient            kubernetes.Interface
 	DynClient            dynamic.Interface
+	TransitSwitchIP      TransitSwitchIP
 	WatcherConfig        *watcher.Config
 	NewOVSDBClient       NewOVSDBClientFn
-	TransitSwitchIP      TransitSwitchIP
+	Namespace            string
+	ClusterCIDR          []string
+	ServiceCIDR          []string
 	IntraRoutingDisabled bool
 }
 
 type Handler struct {
 	event.HandlerBase
-	HandlerConfig
-	mutex                     sync.Mutex
 	cableRoutingInterface     netlink.NetworkInterface
 	netLink                   netlink.Interface
 	pFilter                   packetfilter.Interface
 	gatewayRouteController    *GatewayRouteController
 	nonGatewayRouteController *NonGatewayRouteController
 	stopCh                    chan struct{}
-	ipFamily                  k8snet.IPFamily
-	isLocalGWMode             bool
+	HandlerConfig
+	ipFamily      k8snet.IPFamily
+	mutex         sync.Mutex
+	isLocalGWMode bool
 }
 
 var logger = log.Logger{Logger: logf.Log.WithName("OVN")}

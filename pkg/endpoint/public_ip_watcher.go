@@ -30,10 +30,10 @@ import (
 )
 
 type PublicIPWatcherConfig struct {
-	SubmSpec      *types.SubmarinerSpecification
-	Interval      time.Duration
 	K8sClient     kubernetes.Interface
+	SubmSpec      *types.SubmarinerSpecification
 	LocalEndpoint *Local
+	Interval      time.Duration
 }
 
 type PublicIPWatcher struct {

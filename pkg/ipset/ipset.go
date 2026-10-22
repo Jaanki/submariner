@@ -145,23 +145,13 @@ var logger = log.Logger{Logger: logf.Log.WithName("IPSet")}
 
 // Entry represents a ipset entry.
 type Entry struct {
-	// IP is the entry's IP.  The IP address protocol corresponds to the HashFamily of IPSet.
-	// All entries' IP addresses in the same ip set has same the protocol, IPv4 or IPv6.
-	IP string
-	// Port is the entry's Port.
-	Port uint
-	// Protocol is the entry's Protocol.  The protocols of entries in the same ip set are all
-	// the same.  The accepted protocols are TCP and UDP.
+	IP       string
 	Protocol ProtocolType
-	// Net is the entry's IP network address.  Network address with zero prefix size can NOT
-	// be stored.
-	Net string
-	// IP2 is the entry's second IP.  IP2 may not be empty for `hash:ip,port,ip` type ip set.
-	IP2 string
-	// SetType is the type of ipset where the entry exists.
-	SetType Type
-	//  [ timeout value ] [ packets value ] [ bytes value ] [ comment string ] [ skbmark value ] [ skbprio value ] [ skbqueue value ]
-	Options []string
+	Net      string
+	IP2      string
+	SetType  Type
+	Options  []string
+	Port     uint
 }
 
 // String returns the string format for ipset entry.

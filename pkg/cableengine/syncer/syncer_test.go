@@ -474,22 +474,22 @@ func testGatewayLatencyInfo() {
 }
 
 type testDriver struct {
-	engine               *fakeEngine.Engine
-	client               *fakeClientset.Clientset
-	gateways             submarinerClientsetv1.GatewayInterface
-	gatewayReactor       *fakeReactor.FailingReactor
-	syncer               *syncer.GatewaySyncer
 	healthChecker        healthchecker.Interface
-	pinger               *fake.Pinger
 	endpoints            dynamic.ResourceInterface
+	gateways             submarinerClientsetv1.GatewayInterface
 	expectedGateway      *submarinerv1.Gateway
+	syncer               *syncer.GatewaySyncer
+	gatewayReactor       *fakeReactor.FailingReactor
+	pinger               *fake.Pinger
+	client               *fakeClientset.Clientset
+	engine               *fakeEngine.Engine
 	expectedDeletedAfter *submarinerv1.Gateway
 	gatewayUpdated       chan *submarinerv1.Gateway
 	gatewayDeleted       chan *submarinerv1.Gateway
 	stopSyncer           chan struct{}
 	stopInformer         chan struct{}
-	savedErrorHandlers   []utilruntime.ErrorHandler
 	handledError         chan error
+	savedErrorHandlers   []utilruntime.ErrorHandler
 }
 
 func newTestDriver() *testDriver {

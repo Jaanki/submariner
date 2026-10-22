@@ -41,26 +41,26 @@ import (
 )
 
 type SyncHandler struct {
-	event.HandlerBase
 	event.NodeHandlerBase
-	localEndpointIfaceName string
-	localClusterCidr       []string
-	localServiceCidr       []string
-	ipFamily               k8snet.IPFamily
+	defaultHostIface netlink.NetworkInterface
+	event.HandlerBase
+	pFilter                packetfilter.Interface
+	netLink                netlink.Interface
+	vxlanDevice            *vxlan.Interface
+	cniIface               *cni.Interface
+	vxlanGwIP              *net.IP
 	remoteSubnets          set.Set[string]
 	remoteSubnetGw         map[string]net.IP
 	remoteVTEPs            set.Set[string]
 	routeCacheGWNode       set.Set[string]
-	pFilter                packetfilter.Interface
-	netLink                netlink.Interface
-	vxlanDevice            *vxlan.Interface
-	vxlanGwIP              *net.IP
+	ipFamily               k8snet.IPFamily
 	vxlanIface             string
 	hostname               string
-	cniIface               *cni.Interface
-	defaultHostIface       netlink.NetworkInterface
+	localEndpointIfaceName string
 	activeEndpointHostname string
 	vtepPrefixCIDR         string
+	localServiceCidr       []string
+	localClusterCidr       []string
 }
 
 var logger = log.Logger{Logger: logf.Log.WithName("KubeProxy")}

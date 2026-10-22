@@ -48,9 +48,9 @@ func init() {
 }
 
 type ControllerSupport struct {
-	Hostname  string
 	endpoints dynamic.ResourceInterface
 	nodes     dynamic.ResourceInterface
+	Hostname  string
 }
 
 func NewControllerSupport() *ControllerSupport {

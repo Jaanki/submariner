@@ -1045,13 +1045,13 @@ func testInit() {
 }
 
 type testDriver struct {
-	endpointSpec     subv1.EndpointSpec
+	driver           cable.Driver
 	localEndpoint    *endpoint.Local
 	cmdExecutor      *fakecommand.Executor
-	driver           cable.Driver
 	plutoCtlFile     *os.File
-	expectErr        bool
 	signingRequestor *fakecertificate.SigningRequestor
+	endpointSpec     subv1.EndpointSpec
+	expectErr        bool
 }
 
 func newTestDriver() *testDriver {

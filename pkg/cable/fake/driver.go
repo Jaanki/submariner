@@ -38,15 +38,15 @@ type disconnectInfo struct {
 	family   k8snet.IPFamily
 }
 type Driver struct {
-	mutex                       sync.Mutex
-	init                        chan struct{}
 	ErrOnInit                   error
-	activeConnections           map[string]v1.Connection
 	Connections                 any
-	connectToEndpoint           chan *natdiscovery.NATEndpointInfo
 	ErrOnConnectToEndpoint      error
-	disconnectFromEndpoint      chan *disconnectInfo
 	ErrOnDisconnectFromEndpoint error
+	init                        chan struct{}
+	activeConnections           map[string]v1.Connection
+	connectToEndpoint           chan *natdiscovery.NATEndpointInfo
+	disconnectFromEndpoint      chan *disconnectInfo
+	mutex                       sync.Mutex
 }
 
 func New() *Driver {

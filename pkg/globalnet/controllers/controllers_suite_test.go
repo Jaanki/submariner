@@ -103,24 +103,24 @@ func TestControllers(t *testing.T) {
 }
 
 type testDriverBase struct {
-	controller               controllers.Interface
+	clusterGlobalEgressIPs   dynamic.ResourceInterface
 	restMapper               meta.RESTMapper
-	dynClient                *dynamicfake.FakeDynamicClient
-	scheme                   *runtime.Scheme
+	gateways                 dynamic.ResourceInterface
+	pods                     dynamic.NamespaceableResourceInterface
+	controller               controllers.Interface
+	endpoints                dynamic.ResourceInterface
+	serviceExports           dynamic.ResourceInterface
+	services                 dynamic.ResourceInterface
+	globalIngressIPs         dynamic.ResourceInterface
+	globalEgressIPs          dynamic.ResourceInterface
 	pFilter                  *fakePF.PacketFilter
 	pool                     *ipam.IPPool
-	localSubnets             []string
-	globalCIDR               string
-	hostName                 string
-	globalEgressIPs          dynamic.ResourceInterface
-	clusterGlobalEgressIPs   dynamic.ResourceInterface
-	globalIngressIPs         dynamic.ResourceInterface
-	services                 dynamic.ResourceInterface
-	serviceExports           dynamic.ResourceInterface
-	endpoints                dynamic.ResourceInterface
-	pods                     dynamic.NamespaceableResourceInterface
-	gateways                 dynamic.ResourceInterface
+	scheme                   *runtime.Scheme
+	dynClient                *dynamicfake.FakeDynamicClient
 	watches                  *fakeDynClient.WatchReactor
+	hostName                 string
+	globalCIDR               string
+	localSubnets             []string
 	expectInstantiationError bool
 }
 

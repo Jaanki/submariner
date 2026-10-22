@@ -291,8 +291,8 @@ func cleanupLegacyIptables(clusterCidr []string) {
 	}
 
 	ipHookChains := []struct {
-		Table packetfilter.TableType
 		Chain *packetfilter.ChainIPHook
+		Table packetfilter.TableType
 	}{
 		{
 			Table: packetfilter.TableTypeNAT,

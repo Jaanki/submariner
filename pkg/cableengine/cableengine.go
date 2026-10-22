@@ -72,15 +72,15 @@ type Engine interface {
 }
 
 type engine struct {
-	sync.Mutex
 	driver              cable.Driver
-	running             bool
-	localCluster        types.SubmarinerCluster
-	localEndpoint       *submendpoint.Local
 	natDiscovery        natdiscovery.Interface
+	localEndpoint       *submendpoint.Local
 	natEndpointInfoCh   chan *natdiscovery.NATEndpointInfo
 	natDiscoveryPending map[string]int
 	installedCables     map[string]metav1.Time
+	localCluster        types.SubmarinerCluster
+	sync.Mutex
+	running bool
 }
 
 var logger = log.Logger{Logger: logf.Log.WithName("CableEngine")}

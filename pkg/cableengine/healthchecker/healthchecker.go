@@ -38,15 +38,15 @@ type Interface interface {
 }
 
 type Config struct {
-	pinger.ControllerConfig
-	WatcherConfig     watcher.Config
 	EndpointNamespace string
 	ClusterID         string
+	WatcherConfig     watcher.Config
+	pinger.ControllerConfig
 }
 
 type controller struct {
-	config           Config
 	pingerController pinger.Controller
+	config           Config
 }
 
 var logger = log.Logger{Logger: logf.Log.WithName("HealthChecker")}

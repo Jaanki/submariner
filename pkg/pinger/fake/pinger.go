@@ -28,10 +28,10 @@ import (
 )
 
 type Pinger struct {
-	ip          string
 	latencyInfo atomic.Value
 	start       chan struct{}
 	stop        chan struct{}
+	ip          string
 }
 
 func NewPinger(ip string) *Pinger {

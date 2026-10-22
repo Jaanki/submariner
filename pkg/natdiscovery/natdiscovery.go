@@ -58,11 +58,11 @@ type Config struct {
 }
 type natDiscovery struct {
 	Config
+	serverUDPWrite  map[k8snet.IPFamily]udpWriteFunction
+	readyChannel    chan *NATEndpointInfo
 	remoteEndpoints sync.Map
 	requestCounter  atomic.Uint64
-	serverUDPWrite  map[k8snet.IPFamily]udpWriteFunction
 	serverPort      int32
-	readyChannel    chan *NATEndpointInfo
 }
 
 var logger = log.Logger{Logger: logf.Log.WithName("NAT")}

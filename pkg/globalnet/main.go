@@ -224,8 +224,8 @@ func cleanupLegacyIptables() {
 	}
 
 	regularChains := []struct {
-		Table packetfilter.TableType
 		Chain string
+		Table packetfilter.TableType
 	}{
 		{Table: packetfilter.TableTypeNAT, Chain: chains.SmGlobalnetEgressForCluster},
 		{Table: packetfilter.TableTypeNAT, Chain: chains.SmGlobalnetEgressForHeadlessSvcPods},

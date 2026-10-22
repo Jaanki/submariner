@@ -79,17 +79,17 @@ var (
 )
 
 type UDPReadInfo struct {
-	b    []byte
 	addr *net.UDPAddr
+	b    []byte
 }
 
 //nolint:gocritic // Ignore "exposedSyncMutex: don't embed sync.Mutex"
 type FakeServerConnection struct {
-	sync.Mutex
 	addr           *net.UDPAddr
 	udpSentChannel chan []byte
 	udpReadChannel chan UDPReadInfo
-	closed         atomic.Bool
+	sync.Mutex
+	closed atomic.Bool
 }
 
 func (c *FakeServerConnection) Close() error {

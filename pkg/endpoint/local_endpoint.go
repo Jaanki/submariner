@@ -51,10 +51,10 @@ import (
 var logger = log.Logger{Logger: logf.Log.WithName("Endpoint")}
 
 type Local struct {
-	mutex     sync.Mutex
-	spec      submv1.EndpointSpec
-	created   bool
 	endpoints dynamic.ResourceInterface
+	spec      submv1.EndpointSpec
+	mutex     sync.Mutex
+	created   bool
 }
 
 func NewLocal(spec *submv1.EndpointSpec, dynClient dynamic.Interface, namespace string) *Local {

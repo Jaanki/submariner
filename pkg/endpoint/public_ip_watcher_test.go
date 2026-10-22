@@ -72,8 +72,8 @@ type publicIPWatcherTestDriver struct {
 	endpointClient dynamic.ResourceInterface
 	localEndpoint  *endpoint.Local
 	k8sClient      *fake.Clientset
-	localEPSpec    submarinerv1.EndpointSpec
 	stopCh         chan struct{}
+	localEPSpec    submarinerv1.EndpointSpec
 }
 
 func newPublicIPWatcherTestDriver() *publicIPWatcherTestDriver {

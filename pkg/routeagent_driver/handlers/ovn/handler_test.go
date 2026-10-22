@@ -163,14 +163,14 @@ var _ = Describe("GetHandlers", func() {
 })
 
 type handlerTestDriver struct {
+	handler event.Handler
 	*testDriver
-	handler              event.Handler
 	pFilter              *fakePF.PacketFilter
+	ovsdbClient          *fakeovn.OVSDBClient
 	ipFamily             k8snet.IPFamily
 	clusterCIDR          string
 	serviceCIDR          string
 	OVNK8sMgmntIntGw     string
-	ovsdbClient          *fakeovn.OVSDBClient
 	intraRoutingDisabled bool
 	localGWMode          bool
 }
